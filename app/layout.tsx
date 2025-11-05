@@ -31,14 +31,15 @@ function Header() {
         "dark:border-gray-800 dark:bg-gray-950"
       )}
     >
-      <div
+      <Link
+        href="/"
         className={cn(
           "p-1 text-cyan-500 font-bold text-xl",
           "dark:text-gray-100"
         )}
       >
         Todo List
-      </div>
+      </Link>
       <div className="flex gap-2 items-center">
         <ThemeToggle />
         <Button variant="secondary" className="cursor-pointer" asChild>

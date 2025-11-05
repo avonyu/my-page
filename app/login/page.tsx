@@ -3,9 +3,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { signIn } from "@/auth";
-// import { signIn } from "next-auth/react";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,20 +14,25 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { signInSchema } from "@/lib/zod";
+import { signInSchema, SignInData } from "@/lib/zod";
 import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
+import OAuths from "@/components/sign-in";
+
+// type SignInData = z.infer<typeof signInSchema>;
 
 export default function LoginPage() {
-  const form = useForm<z.infer<typeof signInSchema>>({
+  const form = useForm<SignInData>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
 
-  async function onSubmit(formData: z.infer<typeof signInSchema>) {
-    await signIn();
+  async function onSubmit(formData: SignInData) {
+    console.log(formData);
+    // await signIn();
   }
 
   return (
@@ -44,15 +46,15 @@ export default function LoginPage() {
         <div className="w-full max-w-md space-y-8 p-8 border rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold text-center">登录</h2>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
               <FormField
                 control={form.control}
-                name="username"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>用户名</FormLabel>
+                    <FormLabel>邮箱</FormLabel>
                     <FormControl>
-                      <Input placeholder="请输入用户名" {...field} />
+                      <Input type="email" placeholder="请输入邮箱" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -78,17 +80,19 @@ export default function LoginPage() {
               <Button type="submit" className="w-full">
                 登录
               </Button>
-              <div className="text-center text-sm">
-                还没有账号？
-                <Link
-                  href="/register"
-                  className="text-blue-600 hover:text-blue-800"
-                >
-                  立即注册
-                </Link>
-              </div>
             </form>
+            <div className="text-center text-sm">
+              还没有账号？
+              <Link
+                href="/register"
+                className="text-blue-600 hover:text-blue-800 underline"
+              >
+                立即注册
+              </Link>
+            </div>
           </Form>
+          <Separator className="my-3" />
+          <OAuths />
         </div>
       </div>
     </main>

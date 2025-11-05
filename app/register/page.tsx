@@ -20,22 +20,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import OAuths from "@/components/sign-in";
-
-// 扩展注册表单的验证规则
-const registerSchema = z
-  .object({
-    username: z.string().min(1, "用户名不能为空"),
-    password: z.string().min(6, "密码至少需要6个字符"),
-    confirmPassword: z.string().min(6, "请确认密码"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "两次输入的密码不一致",
-    path: ["confirmPassword"],
-  });
+import { registerSchema, RegisterData } from "@/lib/zod";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const form = useForm<z.infer<typeof registerSchema>>({
+  const form = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       username: "",
@@ -44,7 +33,8 @@ export default function RegisterPage() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof registerSchema>) {
+  async function onSubmit(values: RegisterData) {
+    console.log(values);
     try {
       const response = await axios.post(
         `${process.env.BASE_URL}/api/v1/register`,
@@ -91,6 +81,19 @@ export default function RegisterPage() {
               />
               <FormField
                 control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>邮箱</FormLabel>
+                    <FormControl>
+                      <Input placeholder="请输入邮箱" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="password"
                 render={({ field }) => (
                   <FormItem>
@@ -130,17 +133,14 @@ export default function RegisterPage() {
                 已有账号？
                 <Link
                   href="/login"
-                  className="text-blue-600 hover:text-blue-800"
+                  className="text-blue-600 hover:text-blue-800 underline"
                 >
                   立即登录
                 </Link>
               </div>
-              {/* <div className="flex justify-around gap-2 w-full">
-                <Separator className="my-3 w-40 " /> or
-                <Separator className="my-3 w-40" />
-              </div> */}
-              <OAuths />
             </form>
+            <Separator className="my-3" />
+            <OAuths />
           </Form>
         </div>
       </div>
