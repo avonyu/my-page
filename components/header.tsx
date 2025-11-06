@@ -1,0 +1,46 @@
+import { cn } from "@/lib/utils";
+import { auth } from "@/auth";
+import { SessionProvider } from "next-auth/react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
+import UserAvatar from "@/components/UserAvatar";
+
+export default async function Header() {
+  const session = await auth();
+
+  return (
+    <header
+      className={cn(
+        "sticky top-0 w-full flex justify-between p-4 bg-white border-b border-gray-200",
+        "dark:border-gray-800 dark:bg-gray-950"
+      )}
+    >
+      <Link
+        href="/"
+        className={cn(
+          "p-1 text-cyan-500 font-bold text-xl",
+          "dark:text-cyan-400"
+        )}
+      >
+        Todo List
+      </Link>
+      <div className="flex gap-2 items-center">
+        <ThemeToggle />
+        {!session && (
+          <>
+            <Button variant="secondary" className="cursor-pointer" asChild>
+              <Link href="/login">Sign In</Link>
+            </Button>
+            <Button className="cursor-pointer" asChild>
+              <Link href="/register">Sign Up</Link>
+            </Button>
+          </>
+        )}
+        <SessionProvider>
+          <UserAvatar />
+        </SessionProvider>
+      </div>
+    </header>
+  );
+}
