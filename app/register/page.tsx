@@ -17,9 +17,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import OAuths from "@/components/sign-in";
+import OAuthButtons from "@/components/oauth-buttons";
 import { registerSchema, RegisterData } from "@/lib/zod";
 
 export default function RegisterPage() {
@@ -62,87 +71,94 @@ export default function RegisterPage() {
       )}
     >
       <div className="flex min-h-screen items-center justify-center">
-        <div className="w-full max-w-md space-y-8 p-8 border rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-center">注册</h2>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>用户名</FormLabel>
-                    <FormControl>
-                      <Input placeholder="请输入用户名" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>邮箱</FormLabel>
-                    <FormControl>
-                      <Input placeholder="请输入邮箱" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>密码</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="请输入密码"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>确认密码</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="请再次输入密码"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full">
-                注册
-              </Button>
-              <div className="text-center text-sm mb-3">
-                已有账号？
-                <Link
-                  href="/login"
-                  className="text-blue-600 hover:text-blue-800 underline"
-                >
-                  立即登录
-                </Link>
-              </div>
-            </form>
-            <Separator className="my-3" />
-            <OAuths />
-          </Form>
-        </div>
+        <Card className="w-full gap-2 max-w-md shadow-xl dark:bg-gray-800">
+          <CardTitle className="text-2xl font-bold text-center">登录</CardTitle>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>用户名</FormLabel>
+                      <FormControl>
+                        <Input placeholder="请输入用户名" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>邮箱</FormLabel>
+                      <FormControl>
+                        <Input placeholder="请输入邮箱" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>密码</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="请输入密码"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>确认密码</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="请再次输入密码"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="w-full">
+                  注册
+                </Button>
+                <div className="text-center text-sm mb-3">
+                  已有账号？
+                  <Link
+                    href="/login"
+                    className="text-blue-600 hover:text-blue-800 underline"
+                  >
+                    立即登录
+                  </Link>
+                </div>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter className="flex-col">
+            <Separator className="mb-3" />
+            <OAuthButtons />
+          </CardFooter>
+        </Card>
       </div>
     </main>
   );

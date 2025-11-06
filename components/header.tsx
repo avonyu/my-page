@@ -4,7 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-import UserAvatar from "@/components/UserAvatar";
+import UserAvatar from "@/components/user-avatar";
 
 export default async function Header() {
   const session = await auth();
