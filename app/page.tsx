@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
-import { auth } from "@/auth";
+// import { auth } from "@/lib/auth";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default async function Home() {
-  const session = await auth();
+  // const session = await auth();
   return (
     <main
       className={cn(
@@ -30,7 +30,7 @@ export default async function Home() {
           简单高效的待办事项管理工具，助你轻松规划每一天
         </p>
         <div className="mt-10 flex gap-4 animate-fade-in-up delay-200">
-          <Link href={session ? "/todo" : "/login"}>
+          <Link href={"/todo"}>
             <Button size="lg" className="bg-blue-500 hover:bg-blue-600">
               开始使用
             </Button>

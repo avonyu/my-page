@@ -37,8 +37,8 @@ export default function LoginPage() {
   });
 
   async function onSubmit(formData: SignInData) {
+    // "use server";
     console.log(formData);
-    // await signIn();
   }
 
   return (
@@ -110,8 +110,8 @@ export default function LoginPage() {
               </form>
             </Form>
           </CardContent>
-          <CardFooter className="flex-col">
-            <Separator className="mb-3" />
+          <CardFooter className="flex-col gap-2">
+            <Separator />
             <OAuthButtons />
           </CardFooter>
         </Card>

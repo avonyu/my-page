@@ -71,3 +71,6 @@ pids
 
 # Yarn Integrity file
 .yarn-integrity
+
+# Prisma Client
+/app/generated/prisma

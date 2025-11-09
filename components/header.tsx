@@ -1,14 +1,16 @@
 import { cn } from "@/lib/utils";
-import { auth } from "@/auth";
-import { SessionProvider } from "next-auth/react";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import UserAvatar from "@/components/user-avatar";
 
 export default async function Header() {
-  const session = await auth();
-
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  // console.log(session);
   return (
     <header
       className={cn(
@@ -37,9 +39,7 @@ export default async function Header() {
             </Button>
           </>
         )}
-        <SessionProvider>
-          <UserAvatar />
-        </SessionProvider>
+        {session && <UserAvatar />}
       </div>
     </header>
   );
