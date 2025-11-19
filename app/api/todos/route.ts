@@ -7,18 +7,20 @@ const prisma = new PrismaClient();
 
 // 获取所有待办事项
 export async function GET() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) return;
+
   try {
     const todos = await prisma.todo.findMany({
-      include: {
-        categories: {
-          include: {
-            category: true,
-          },
-        },
-      },
       orderBy: {
         createdAt: 'desc',
       },
+      where: {
+        userId: session.user.id
+      }
     });
     return NextResponse.json(todos);
   } catch (error) {
@@ -32,7 +34,7 @@ export async function POST(request: NextRequest) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  
+
   if (!session?.user) return;
 
   try {
@@ -45,21 +47,7 @@ export async function POST(request: NextRequest) {
         dueDate: dueDate ? new Date(dueDate) : null,
         priority,
         userId: session.user.id, // 从session中获取userId
-        categories: {
-          create: categoryIds.map((categoryId: string) => ({
-            category: {
-              connect: { id: categoryId },
-            },
-          })),
-        },
-      },
-      include: {
-        categories: {
-          include: {
-            category: true,
-          },
-        },
-      },
+      }
     });
 
     return NextResponse.json(todo);

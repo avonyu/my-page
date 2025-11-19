@@ -13,14 +13,7 @@ export async function PATCH(
     const { completed } = await request.json();
     const todo = await prisma.todo.update({
       where: { id },
-      data: { completed },
-      include: {
-        categories: {
-          include: {
-            category: true,
-          },
-        },
-      },
+      data: { completed }
     });
 
     return NextResponse.json(todo);
@@ -32,7 +25,7 @@ export async function PATCH(
 
 // 删除待办事项
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
