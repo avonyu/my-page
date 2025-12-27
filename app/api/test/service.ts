@@ -16,7 +16,6 @@ export interface TestResponse {
 // TODO: understand this⬇️
 export class TestService {
   static async createTest(input: TestInput): Promise<TestResponse> {
-    console.log(input)
     try {
       const test = await prisma.test.create({
         data: {
@@ -45,6 +44,13 @@ export class TestService {
           createAt: 'desc',
         },
       });
+      const output = tests.map(test => ({
+        id: test.id,
+        content: test.content,
+        createAt: test.createAt,
+        updateAt: test.updateAt,
+        userId: test.userId
+      }))
 
       return tests.map(test => ({
         id: test.id,
