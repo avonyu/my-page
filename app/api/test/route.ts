@@ -1,8 +1,8 @@
-import { TestService } from "./service"
+import { getAllTests, createTest, updateTest, deleteTest } from "./service"
 
 export async function GET() {
   try {
-    const tests = await TestService.getAllTests()
+    const tests = await getAllTests()
     return Response.json({ tests })
   } catch (error) {
     return Response.json({ error: (error as Error).message }, { status: 500 })
@@ -12,7 +12,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const test = await TestService.createTest({ content: body.content, userId: body.userId })
+    const test = await createTest({ content: body.content, userId: body.userId })
     return Response.json({ test }, { status: 201 })
   } catch (error) {
     return Response.json({ error: (error as Error).message }, { status: 500 })
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request, { params }: { params: { id: number } }) {
   try {
     const body = await request.json()
-    const test = await TestService.updateTest(params.id, { content: body.content })
+    const test = await updateTest(params.id, { content: body.content })
 
     if (!test) {
       return Response.json({ error: 'Test not found' }, { status: 404 })
@@ -36,7 +36,7 @@ export async function PUT(request: Request, { params }: { params: { id: number }
 
 export async function DELETE(request: Request, { params }: { params: { id: number } }) {
   try {
-    const deleted = await TestService.deleteTest(params.id)
+    const deleted = await deleteTest(params.id)
 
     if (!deleted) {
       return Response.json({ error: 'Test not found' }, { status: 404 })

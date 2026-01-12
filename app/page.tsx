@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import Projects from "@/app/projects";
+import Projects from "@/app/components/projects";
 
 export default async function Home() {
   const session = await auth.api.getSession({
@@ -24,11 +24,11 @@ export default async function Home() {
         <div className="flex flex-col justify-center items-center min-h-screen px-4">
           <div
             className={cn(
-              "font-bold text-6xl md:text-7xl lg:text-8xl leading-30",
+              "font-bold text-6xl sm:text-6xl md:text-7xl lg:text-8xl leading-30",
               "bg-clip-text text-transparent bg-linear-to-r from-blue-500 to-teal-400 animate-fade-in"
             )}
           >
-            {"Hi, what's up"}
+            {"Hi, I'm Avon"}
           </div>
           <p
             className={cn(
@@ -37,7 +37,7 @@ export default async function Home() {
             )}
           >
             {
-              "Avon here, I'm a full-stack Engineer, and I love building things."
+              "I'm a full-stack Engineer, and I love building things."
             }
           </p>
           <div className="mt-10 flex gap-4 animate-fade-in-up delay-200">

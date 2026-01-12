@@ -2,7 +2,7 @@
 
 import { useEffect, Dispatch, SetStateAction } from "react";
 import { TestResponse } from "@/app/api/test/service";
-// import { useCountStore } from "@/store";
+import { getAllTests } from "@/app/api/test/service";
 
 export function ShowAllTests({
   tests,
@@ -13,28 +13,27 @@ export function ShowAllTests({
   setTests: Dispatch<SetStateAction<TestResponse[]>>;
   className?: string;
 }) {
-  // const increment = useCountStore((state) => state.increment);
-  // const count = useCountStore((state) => state.count);
   useEffect(() => {
     // 获取测试数据的逻辑
     const fetchTests = async () => {
       try {
-        const response = await fetch("/api/test");
-        const data = await response.json();
-        setTests(data.tests || []);
+        // const response = await fetch("/api/test");
+        // const data = await response.json();
+        const data = await getAllTests();
+        setTests(data || []);
       } catch (error) {
         console.error("获取测试数据失败:", error);
       }
     };
 
     fetchTests();
-  }, [setTests]);
+  }, []);
 
   return (
     <div className={className}>
-      {/* <button onClick={() => increment(3)}>count: {count}</button> */}
+      <h1 className="text-2xl font-bold mb-2">数据项</h1>
       {tests.map((item) => (
-        <div key={item.id}>{item.content}</div>
+        <div key={item.id}>- {item.content}</div>
       ))}
     </div>
   );

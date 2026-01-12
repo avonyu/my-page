@@ -1,3 +1,5 @@
+"use server"
+
 import prisma from "@/lib/prisma";
 
 export interface TestInput {
@@ -13,112 +15,104 @@ export interface TestResponse {
   userId: string;
 }
 
-// TODO: understand this⬇️
-export class TestService {
-  static async createTest(input: TestInput): Promise<TestResponse> {
-    "use server"
-    try {
-      const test = await prisma.test.create({
-        data: {
-          content: input.content,
-          userId: input.userId
-        },
-      });
+export async function createTest(input: TestInput): Promise<TestResponse> {
+  try {
+    const test = await prisma.test.create({
+      data: {
+        content: input.content,
+        userId: input.userId
+      },
+    });
 
-      return {
-        id: test.id,
-        content: test.content,
-        createAt: test.createAt,
-        updateAt: test.updateAt,
-        userId: test.userId
-      };
-    } catch (error) {
-      throw new Error(`Failed to create test: ${error}`);
-    }
+    return {
+      id: test.id,
+      content: test.content,
+      createAt: test.createAt,
+      updateAt: test.updateAt,
+      userId: test.userId
+    };
+  } catch (error) {
+    throw new Error(`Failed to create test: ${error}`);
   }
+}
 
-  static async getAllTests(): Promise<TestResponse[]> {
-    "use server"
-    try {
-      const tests = await prisma.test.findMany({
-        orderBy: {
-          createAt: 'desc',
-        },
-      });
+export async function getAllTests(): Promise<TestResponse[]> {
+  try {
+    const tests = await prisma.test.findMany({
+      orderBy: {
+        createAt: 'desc',
+      },
+    });
 
-      return tests.map(test => ({
-        id: test.id,
-        content: test.content,
-        createAt: test.createAt,
-        updateAt: test.updateAt,
-        userId: test.userId
-      }));
-    } catch (error) {
-      throw new Error(`Failed to fetch tests: ${error}`);
-    }
+    return tests.map(test => ({
+      id: test.id,
+      content: test.content,
+      createAt: test.createAt,
+      updateAt: test.updateAt,
+      userId: test.userId
+    }));
+  } catch (error) {
+    throw new Error(`Failed to fetch tests: ${error}`);
   }
+}
 
-  static async getTestById(id: number): Promise<TestResponse | null> {
-    "use server"
-    try {
-      const test = await prisma.test.findUnique({
-        where: {
-          id,
-        },
-      });
+export async function getTestById(id: number): Promise<TestResponse | null> {
+  try {
+    const test = await prisma.test.findUnique({
+      where: {
+        id,
+      },
+    });
 
-      if (!test) {
-        return null;
-      }
-
-      return {
-        id: test.id,
-        content: test.content,
-        createAt: test.createAt,
-        updateAt: test.updateAt,
-        userId: test.userId
-      };
-    } catch (error) {
-      throw new Error(`Failed to fetch test: ${error}`);
+    if (!test) {
+      return null;
     }
+
+    return {
+      id: test.id,
+      content: test.content,
+      createAt: test.createAt,
+      updateAt: test.updateAt,
+      userId: test.userId
+    };
+  } catch (error) {
+    throw new Error(`Failed to fetch test: ${error}`);
   }
+}
 
-  static async updateTest(id: number, input: Partial<TestInput>): Promise<TestResponse | null> {
-    "use server"
-    try {
-      const test = await prisma.test.update({
-        where: {
-          id,
-        },
-        data: {
-          content: input.content,
-        },
-      });
+export async function updateTest(id: number, input: Partial<TestInput>): Promise<TestResponse | null> {
+  try {
+    const test = await prisma.test.update({
+      where: {
+        id,
+      },
+      data: {
+        content: input.content,
+      },
+    });
 
-      return {
-        id: test.id,
-        content: test.content,
-        createAt: test.createAt,
-        updateAt: test.updateAt,
-        userId: test.userId
-      };
-    } catch (error) {
-      throw new Error(`Failed to update test: ${error}`);
-    }
+    return {
+      id: test.id,
+      content: test.content,
+      createAt: test.createAt,
+      updateAt: test.updateAt,
+      userId: test.userId
+    };
+  } catch (error) {
+    throw new Error(`Failed to update test: ${error}`);
   }
+}
 
-  static async deleteTest(id: number): Promise<boolean> {
-    "use server"
-    try {
-      await prisma.test.delete({
-        where: {
-          id,
-        },
-      });
+export async function deleteTest(id: number): Promise<boolean> {
+  try {
+    await prisma.test.delete({
+      where: {
+        id,
+      },
+    });
 
-      return true;
-    } catch (error) {
-      throw new Error(`Failed to delete test: ${error}`);
-    }
+    return true;
+  } catch (error) {
+    throw new Error(`Failed to delete test: ${error}`);
   }
 }

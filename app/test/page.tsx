@@ -15,7 +15,7 @@ export default function TextPage() {
         <ShowAllTests
           tests={tests}
           setTests={setTests}
-          className="mx-3 w-50 p-2 border"
+          className="mx-3 w-50 p-2"
         />
       </div>
     </main>

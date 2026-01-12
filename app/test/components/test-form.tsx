@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useSession } from "@/lib/auth-client";
+import { createTest } from "@/app/api/test/service";
 
 const formSchema = z.object({
   content: z.string(),
@@ -84,10 +85,16 @@ export function TestForm({
 
   const handleSubmit = async (value: z.infer<typeof formSchema>) => {
     try {
-      const result = await onSubmit(value, userId);
-      if (result.success) {
-        toast.success(result.message);
-      }
+      // const result = await onSubmit(value, userId);
+      const result = await createTest({
+        content: value.content,
+        userId: userId,
+      });
+
+      setTests([result, ...tests]);
+      // if (result.success) {
+      //   toast.success(result.message);
+      // }
       form.reset(); // 清空表单
     } catch (error) {
       // 显示错误信息给用户
