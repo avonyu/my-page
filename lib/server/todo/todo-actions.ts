@@ -66,8 +66,9 @@ export async function createTodoItem(input: TodoItemInput): Promise<Response> {
   }
 }
 
-export async function getAllTodoItems(userId: string): Promise<Response> {
+export async function getAllTodoItems(userId: string | undefined): Promise<Response> {
   try {
+    if (!userId) throw new Error("userId is undefined")
     const todoItems = await prisma.todoItem.findMany({
       where: {
         userId,

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+// import { auth } from "@/lib/auth";
+// import { headers } from "next/headers";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/header";
@@ -8,9 +8,9 @@ import Footer from "@/components/footer";
 import Projects from "@/app/components/projects";
 
 export default async function Home() {
-  const session = await auth.api.getSession({
-    headers: await headers(), // you need to pass the headers object.
-  });
+  // const session = await auth.api.getSession({
+  //   headers: await headers(), // you need to pass the headers object.
+  // });
 
   return (
     <>
