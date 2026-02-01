@@ -48,16 +48,19 @@ const customNavList: todoSet[] = [
     id: "self-project",
     label: "个人项目",
     icon: <Computer size={16} />,
+    bgImg: "/bg-self-project.jpg",
   },
   {
     id: "resuma",
     label: "简历投递",
     icon: <Briefcase size={16} />,
+    bgImg: "/bg-resume.jpg",
   },
   {
     id: "work",
     label: "工作",
     icon: <Bookmark size={16} />,
+    bgImg: "/bg-work.jpg",
   },
 ];
 
@@ -120,7 +123,11 @@ function UserInfo() {
   );
 }
 
-export default function SidePannel() {
+export default function SidePannel({
+  onSelectAction,
+}: {
+  onSelectAction: (id: string) => void;
+}) {
   const [activeNav, setActiveNav] = useState("tasks");
 
   return (
@@ -154,7 +161,10 @@ export default function SidePannel() {
             {navList.map((item) => (
               <button
                 key={item.id}
-                onClick={() => setActiveNav(item.id)}
+                onClick={() => {
+                  setActiveNav(item.id);
+                  onSelectAction(item.id);
+                }}
                 className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-sm transition-colors ${
                   activeNav === item.id
                     ? "bg-gray-100 text-gray-800"
@@ -165,6 +175,7 @@ export default function SidePannel() {
                 {item.label}
                 {item.count && (
                   <span className="ml-auto text-xs text-gray-600 bg-gray-200 rounded-lg p-0.5">
+                    {/* TODO: 这里应该是动态计算的任务数量 */}
                     {item.count}
                   </span>
                 )}
@@ -175,7 +186,10 @@ export default function SidePannel() {
             {customNavList.map((item) => (
               <button
                 key={item.id}
-                onClick={() => setActiveNav(item.id)}
+                onClick={() => {
+                  setActiveNav(item.id);
+                  onSelectAction(item.id);
+                }}
                 className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-sm transition-colors ${
                   activeNav === item.id
                     ? "bg-gray-100"

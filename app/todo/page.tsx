@@ -8,7 +8,7 @@ import { Spinner } from "@/components/ui/spinner";
 import SidePannel from "./components/side-pannel";
 import MainArea from "./components/main-area";
 import { useTodoAppStore } from "@/store";
-import { todoConfig as todoSets, type todoSet } from "./config";
+import { todoConfig as defaultTodoSets, type todoSet } from "./config";
 
 interface Todo {
   id: string;
@@ -53,8 +53,8 @@ export default function TodoPage() {
 
   return (
     <div className="min-h-screen max-h-20 flex dark:bg-gray-900">
-      <SidePannel />
-      <MainArea todoSet={todoSets[5]} />
+      <SidePannel onSelectAction={setTodoSet} />
+      <MainArea todoSet={defaultTodoSets.find((set) => set.id === todoSet) || defaultTodoSets[0]} />
     </div>
   );
 }
